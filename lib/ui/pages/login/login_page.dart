@@ -31,19 +31,27 @@ class LoginPage extends StatelessWidget {
                           decoration: InputDecoration(
                               labelText: 'Email',
                               icon: Icon(Icons.email),
-                              errorText: snapshot.data),
+                              errorText: snapshot.data?.isEmpty == true
+                                  ? null
+                                  : snapshot.data),
                           onChanged: presenter.validateEmail,
                           keyboardType: TextInputType.emailAddress,
                         );
                       }),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Senha',
-                      icon: Icon(Icons.lock),
-                    ),
-                    onChanged: presenter.validatePassword,
-                    obscureText: true,
-                  ),
+                  StreamBuilder<String>(
+                      stream: presenter.passwordErrorStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Senha',
+                              icon: Icon(Icons.lock),
+                              errorText: snapshot.data?.isEmpty == true
+                                  ? null
+                                  : snapshot.data),
+                          onChanged: presenter.validatePassword,
+                          obscureText: true,
+                        );
+                      }),
                   RaisedButton(onPressed: null, child: Text('Entrar')),
                   FlatButton.icon(
                       onPressed: null,
