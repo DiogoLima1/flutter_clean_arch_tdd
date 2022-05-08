@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../pages/pages.dart';
 
 class LoginPage extends StatelessWidget {
+  final LoginPresenter presenter;
+
+  LoginPage(this.presenter);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +29,7 @@ class LoginPage extends StatelessWidget {
                       labelText: 'Email',
                       icon: Icon(Icons.email),
                     ),
+                    onChanged: presenter.validateEmail,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   TextFormField(
@@ -31,6 +37,7 @@ class LoginPage extends StatelessWidget {
                       labelText: 'Senha',
                       icon: Icon(Icons.lock),
                     ),
+                    onChanged: presenter.validatePassword,
                     obscureText: true,
                   ),
                   RaisedButton(onPressed: null, child: Text('Entrar')),

@@ -1,10 +1,16 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_tdd/ui/pages/pages.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
+class LoginPresenterSpy extends Mock implements LoginPresenter {}
 
 void main() {
+  LoginPresenter presenter;
   Future<void> loadPage(WidgetTester tester) async {
-    final loginPage = MaterialApp(home: LoginPage());
+    presenter = LoginPresenterSpy();
+    final loginPage = MaterialApp(home: LoginPage(presenter));
     await tester.pumpWidget(loginPage);
   }
 
@@ -40,27 +46,16 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    final emailTextChildren = find.descendant(
-        of: find.bySemanticsLabel('Email'), matching: find.byType(Text));
+    final email = faker.internet.email();
 
-    expect(
-      emailTextChildren,
-      findsOneWidget,
-      reason:
-          'when a TextFormField has only text child, means it has no erros, since one of the childs is always the label text',
-    );
+    await tester.enterText(find.bySemanticsLabel('Email'), email);
 
-    final passwordTextChildren = find.descendant(
-        of: find.bySemanticsLabel('Senha'), matching: find.byType(Text));
+    verify(presenter.validateEmail(email));
 
-    expect(
-      passwordTextChildren,
-      findsOneWidget,
-      reason:
-          'when a TextFormField has only text child, means it has no erros, since one of the childs is always the label text',
-    );
+    final password = faker.internet.password();
 
-    final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
-    expect(button.onPressed, null);
+    await tester.enterText(find.bySemanticsLabel('Senha'), password);
+
+    verify(presenter.validatePassword(password));
   });
 }

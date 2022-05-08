@@ -7,7 +7,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter TDD Clean Arch',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: LoginPage(null),
     );
   }
 }
