@@ -9,35 +9,40 @@ class LoginPage extends StatelessWidget {
         title: const Text(''),
       ),
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          Container(
-            child: ListTile(leading: Icon(Icons.dehaze), title: Text('Login')),
-          ),
-          Form(
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    icon: Icon(Icons.email),
-                  ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    icon: Icon(Icons.lock),
-                  ),
-                ),
-                RaisedButton(onPressed: () {}, child: Text('Entrar')),
-                FlatButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.person),
-                    label: Text('Criar Conta'))
-              ],
+          child: Center(
+        child: Column(
+          children: [
+            Container(
+              child:
+                  ListTile(leading: Icon(Icons.dehaze), title: Text('Login')),
             ),
-          )
-        ],
+            Form(
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      icon: Icon(Icons.email),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                      icon: Icon(Icons.lock),
+                    ),
+                    obscureText: true,
+                  ),
+                  RaisedButton(onPressed: null, child: Text('Entrar')),
+                  FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(Icons.person),
+                      label: Text('Criar Conta'))
+                ],
+              ),
+            )
+          ],
+        ),
       )),
     );
   }
