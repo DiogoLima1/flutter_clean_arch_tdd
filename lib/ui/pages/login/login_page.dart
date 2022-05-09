@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_arch_tdd/ui/pages/login/components/components.dart';
+import 'package:provider/provider.dart';
 import '../../../ui/components/components.dart';
 import '../../pages/pages.dart';
 
@@ -49,52 +51,20 @@ class _LoginPageState extends State<LoginPage> {
                   child: ListTile(
                       leading: Icon(Icons.dehaze), title: Text('Login')),
                 ),
-                Form(
-                  child: Column(
-                    children: [
-                      StreamBuilder<String>(
-                          stream: widget.presenter.emailErrorStream,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Email',
-                                  icon: Icon(Icons.email),
-                                  errorText: snapshot.data?.isEmpty == true
-                                      ? null
-                                      : snapshot.data),
-                              onChanged: widget.presenter.validateEmail,
-                              keyboardType: TextInputType.emailAddress,
-                            );
-                          }),
-                      StreamBuilder<String>(
-                          stream: widget.presenter.passwordErrorStream,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Senha',
-                                  icon: Icon(Icons.lock),
-                                  errorText: snapshot.data?.isEmpty == true
-                                      ? null
-                                      : snapshot.data),
-                              onChanged: widget.presenter.validatePassword,
-                              obscureText: true,
-                            );
-                          }),
-                      StreamBuilder<bool>(
-                          stream: widget.presenter.isFormValidStream,
-                          builder: (context, snapshot) {
-                            return RaisedButton(
-                              onPressed: snapshot.data == true
-                                  ? widget.presenter.auth
-                                  : null,
-                              child: Text('Entrar'.toUpperCase()),
-                            );
-                          }),
-                      FlatButton.icon(
-                          onPressed: null,
-                          icon: Icon(Icons.person),
-                          label: Text('Criar Conta'))
-                    ],
+                Provider(
+                  create: (_) => widget.presenter,
+                  child: Form(
+                    child: Column(
+                      children: [
+                        EmailInput(),
+                        PasswordInput(),
+                        LoginButton(),
+                        FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(Icons.person),
+                            label: Text('Criar Conta'))
+                      ],
+                    ),
                   ),
                 )
               ],
