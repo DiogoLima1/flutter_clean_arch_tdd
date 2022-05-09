@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch_tdd/ui/components/components.dart';
+import '../../../ui/components/components.dart';
 import '../../pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,10 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
           widget.presenter.mainErrorStream.listen((error) {
             if (error != null) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(error, textAlign: TextAlign.center),
-              ));
+              showErrorMessage(context, error);
             }
           });
 
